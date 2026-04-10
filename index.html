@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-i App — Gestion Intelligente de Trottinette Électrique</title>
+    <meta name="description"
+        content="Téléchargez Rock-i — l'application intelligente pour gérer votre trottinette électrique Rocki. Diagnostics en temps réel, suivi de trajets, sécurité et communauté.">
+    <meta name="keywords" content="Rock-i, trottinette, trottinette électrique, app, Rocki, suivi de trajet, BLE, trottinette intelligente">
+    <meta name="author" content="Rocki / WeFixIT">
+    <meta property="og:title" content="Rock-i App — Gestion Intelligente de Trottinette Électrique">
+    <meta property="og:description" content="Téléchargez Rock-i pour Android. Votre compagnon intelligent pour trottinette.">
+    <meta property="og:image" content="assets/images/app_logo.png">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="assets/images/app_logo.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Outfit:wght@400;500;600;700;800&family=Noto+Kufi+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Ambient Background -->
+    <div class="page-bg" aria-hidden="true">
+        <div class="bg-grid"></div>
+    </div>
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-brand">
+                <img src="assets/images/app_logo.png" alt="Rock-i Logo" class="nav-logo">
+                <span class="nav-brand-text"><span>Rock-i</span></span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#features" data-i18n="nav_features">Fonctionnalités</a></li>
+                <li><a href="#app-preview" data-i18n="nav_app">Application</a></li>
+                <li><a href="#compatibility" data-i18n="compat_label">Compatibilité</a></li>
+                <li>
+                    <!-- Language Switcher -->
+                    <button class="lang-switcher" id="langSwitcher" aria-label="Changer de langue" title="Changer de langue">
+                        <img src="assets/images/language_icon.png" alt="" class="lang-icon">
+                        <span class="lang-code" id="langCode">FR</span>
+                    </button>
+                </li>
+                <li><a href="#download" class="nav-cta"><img src="assets/images/download_icon.png" alt="" class="nav-cta-icon"><span data-i18n="nav_download">Télécharger</span></a></li>
+            </ul>
+            <!-- Mobile lang switch (always visible) -->
+            <button class="lang-switcher mobile-lang" id="langSwitcherMobile" aria-label="Changer de langue">
+                <img src="assets/images/language_icon.png" alt="" class="lang-icon">
+                <span class="lang-code" id="langCodeMobile">FR</span>
+            </button>
+            <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu de navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="pulse"></span>
+                    <span data-i18n="hero_badge">Disponible maintenant sur Android</span>
+                </div>
+                <h1>
+                    <span data-i18n="hero_title_1">Votre Trajet,</span><br>
+                    <span class="gradient-text" data-i18n="hero_title_2">Plus Intelligent.</span>
+                </h1>
+                <p class="hero-desc" data-i18n="hero_desc">
+                    Rock-i est l'application compagnon intelligente pour votre trottinette électrique Rocki. 
+                    Connectez-vous via Bluetooth, surveillez les diagnostics en temps réel, 
+                    suivez chaque trajet et rejoignez une communauté grandissante de riders.
+                </p>
+                <div class="hero-actions">
+                    <a href="#download" class="btn-download" id="heroDownloadBtn">
+                        <img src="assets/images/android_icon.png" alt="" class="btn-icon">
+                        <span data-i18n="btn_download_android">Télécharger pour Android</span>
+                    </a>
+                    <a href="#download" class="btn-ios">
+                        <img src="assets/images/apple_icon.png" alt="" class="btn-icon">
+                        iOS
+                        <span class="soon-badge" data-i18n="btn_soon">Bientôt</span>
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="value">50+</span>
+                        <span class="label" data-i18n="stat_features">Fonctionnalités</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="value">BLE 5.0</span>
+                        <span class="label" data-i18n="stat_connectivity">Connectivité</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="value">2</span>
+                        <span class="label" data-i18n="stat_models">Modèles</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-app-showcase">
+                    <img src="assets/images/app_logo.png" alt="Rock-i App" class="hero-app-icon">
+                    <div class="hero-glow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+            <span data-i18n="scroll_explore">Défiler pour explorer</span>
+        </div>
+    </section>
+
+    <!-- ========== FEATURES ========== -->
+    <section class="section" id="features">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <span class="section-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <span data-i18n="features_label">Fonctionnalités</span>
+                </span>
+                <h2 class="section-title" data-i18n="features_title">Tout Ce Dont Vous Avez<br>Besoin en Une App</h2>
+                <p class="section-subtitle" data-i18n="features_subtitle">
+                    De la connexion Bluetooth en temps réel aux diagnostics avancés, 
+                    Rock-i met le contrôle total de votre trottinette dans votre poche.
+                </p>
+            </div>
+            <div class="features-grid stagger">
+                <div class="feature-card glass reveal">
+                    <div class="feature-icon">
+                        <img src="assets/images/bt_icon.png" alt="Bluetooth">
+                    </div>
+                    <h3 data-i18n="feat_bt_title">Connexion Bluetooth</h3>
+                    <p data-i18n="feat_bt_desc">Appairage BLE 5.0 instantané avec votre trottinette Rocki. La reconnexion automatique vous garde toujours connecté.</p>
+                </div>
+                <div class="feature-card glass reveal">
+                    <div class="feature-icon">
+                        <img src="assets/images/lock_icon.png" alt="Lock">
+                    </div>
+                    <h3 data-i18n="feat_lock_title">Sécurité & Verrouillage</h3>
+                    <p data-i18n="feat_lock_desc">Verrouillage/déverrouillage à distance, protection PIN et alarme antivol pour sécuriser votre trajet.</p>
+                </div>
+                <div class="feature-card glass reveal">
+                    <div class="feature-icon">
+                        <img src="assets/images/speed_icon.png" alt="Speed">
+                    </div>
+                    <h3 data-i18n="feat_dash_title">Tableau de Bord en Direct</h3>
+                    <p data-i18n="feat_dash_desc">Vitesse, batterie, température et autonomie affichés en temps réel sur votre téléphone.</p>
+                </div>
+                <div class="feature-card glass reveal">
+                    <div class="feature-icon">
+                        <img src="assets/images/diag_icon.png" alt="Diagnostics">
+                    </div>
+                    <h3 data-i18n="feat_diag_title">Diagnostics Intelligents</h3>
+                    <p data-i18n="feat_diag_desc">Vérifications approfondies du système — cellules de batterie, CPU, capteurs et modules de communication.</p>
+                </div>
+                <div class="feature-card glass reveal">
+                    <div class="feature-icon">
+                        <img src="assets/images/map_icon.png" alt="Map">
+                    </div>
+                    <h3 data-i18n="feat_nav_title">Navigation & Cartes</h3>
+                    <p data-i18n="feat_nav_desc">Navigation intégrée avec styles de carte Rocki personnalisés, vue satellite et mode terrain 3D.</p>
+                </div>
+                <div class="feature-card glass reveal">
+                    <div class="feature-icon">
+                        <img src="assets/images/ride_history.png" alt="Ride History">
+                    </div>
+                    <h3 data-i18n="feat_history_title">Historique des Trajets</h3>
+                    <p data-i18n="feat_history_desc">Journaux détaillés de chaque trajet — distance, durée, graphiques de vitesse et replay du parcours sur la carte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== APP PREVIEW ========== -->
+    <section class="section preview-section" id="app-preview">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <span class="section-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    <span data-i18n="preview_label">Aperçu de l'Application</span>
+                </span>
+                <h2 class="section-title" data-i18n="preview_title">Puissante & Intuitive</h2>
+                <p class="section-subtitle" data-i18n="preview_subtitle">
+                    Une interface moderne dotée de tous les outils nécessaires pour gérer, 
+                    surveiller et optimiser votre expérience trottinette.
+                </p>
+            </div>
+            <div class="preview-grid stagger">
+                <div class="preview-card reveal">
+                    <img src="assets/images/speed_icon.png" alt="Dashboard" class="preview-icon">
+                    <h4 data-i18n="prev_dashboard_title">Tableau de Bord</h4>
+                    <p data-i18n="prev_dashboard_desc">Vitesse, batterie, autonomie et température en un coup d'œil</p>
+                </div>
+                <div class="preview-card reveal">
+                    <img src="assets/images/diag_icon.png" alt="Diagnostics" class="preview-icon">
+                    <h4 data-i18n="prev_diag_title">Diagnostics</h4>
+                    <p data-i18n="prev_diag_desc">Analyse complète de l'état du système avec détection de codes d'erreur</p>
+                </div>
+                <div class="preview-card reveal">
+                    <img src="assets/images/map_icon.png" alt="Navigation" class="preview-icon">
+                    <h4 data-i18n="prev_nav_title">Navigation</h4>
+                    <p data-i18n="prev_nav_desc">Navigation guidée avec style de carte Rocki personnalisé</p>
+                </div>
+                <div class="preview-card reveal">
+                    <img src="assets/images/ride_history.png" alt="Ride History" class="preview-icon">
+                    <h4 data-i18n="prev_history_title">Historique</h4>
+                    <p data-i18n="prev_history_desc">Revoyez chaque trajet avec statistiques détaillées et replay du parcours</p>
+                </div>
+                <div class="preview-card reveal">
+                    <img src="assets/images/lock_icon.png" alt="Security" class="preview-icon">
+                    <h4 data-i18n="prev_security_title">Sécurité</h4>
+                    <p data-i18n="prev_security_desc">Verrouillage PIN, alarme antivol et verrouillage à distance</p>
+                </div>
+                <div class="preview-card reveal">
+                    <img src="assets/images/fault_detection_icon.png" alt="Fault Detection" class="preview-icon">
+                    <h4 data-i18n="prev_fault_title">Détection de Pannes</h4>
+                    <p data-i18n="prev_fault_desc">Scan automatique des erreurs avec dépannage guidé</p>
+                </div>
+                <div class="preview-card reveal">
+                    <img src="assets/images/settings_icon.png" alt="Settings" class="preview-icon">
+                    <h4 data-i18n="prev_custom_title">Personnalisation</h4>
+                    <p data-i18n="prev_custom_desc">Thème sombre/clair, langue, unités et réglages de vitesse</p>
+                </div>
+                <div class="preview-card reveal preview-card--soon">
+                    <img src="assets/images/chat_icon.png" alt="AI Assistant" class="preview-icon">
+                    <h4><span data-i18n="prev_ai_title">Assistant IA</span> <span class="feature-soon-badge" data-i18n="btn_soon">Bientôt</span></h4>
+                    <p data-i18n="prev_ai_desc">Chatbot intégré pour aide, conseils et dépannage</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== COMPATIBILITY ========== -->
+    <section class="section" id="compatibility">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <span class="section-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                    <span data-i18n="compat_label">Compatibilité</span>
+                </span>
+                <h2 class="section-title" data-i18n="compat_title">Compatible avec Votre Appareil</h2>
+            </div>
+            <div class="compat-badges reveal">
+                <div class="compat-badge glass">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M17 2H7a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2z"/>
+                        <path d="M12 18h.01"/>
+                    </svg>
+                    <div class="compat-info">
+                        <div class="os-name">Android</div>
+                        <div class="os-version" data-i18n="compat_android">Android 8.0+ (Oreo)</div>
+                    </div>
+                </div>
+                <div class="compat-badge glass">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                        <path d="M12 8v4"/>
+                        <path d="M12 16h.01"/>
+                    </svg>
+                    <div class="compat-info">
+                        <div class="os-name">iOS</div>
+                        <div class="os-version" data-i18n="compat_ios">Bientôt disponible</div>
+                    </div>
+                </div>
+                <div class="compat-badge glass">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/>
+                        <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/>
+                    </svg>
+                    <div class="compat-info">
+                        <div class="os-name">Bluetooth</div>
+                        <div class="os-version" data-i18n="compat_ble">BLE 5.0 requis</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== DOWNLOAD CTA ========== -->
+    <section class="section cta-section" id="download">
+        <div class="section-inner">
+            <div class="cta-card reveal">
+                <h2><span data-i18n="cta_title_1">Prêt à</span> <span class="gradient-text" data-i18n="cta_title_2">Rouler Plus Intelligemment ?</span></h2>
+                <p data-i18n="cta_desc">Téléchargez Rock-i maintenant et exploitez tout le potentiel de votre trottinette Rocki.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn-download" id="mainDownloadBtn" onclick="handleDownload(event)">
+                        <img src="assets/images/download_icon.png" alt="" class="btn-icon">
+                        <span data-i18n="btn_download_apk">Télécharger APK</span>
+                    </a>
+                    <a href="#" class="btn-ios" aria-disabled="true">
+                        <img src="assets/images/apple_icon.png" alt="" class="btn-icon">
+                        App Store
+                        <span class="soon-badge" data-i18n="btn_soon">Bientôt</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <img src="assets/images/app_logo.png" alt="Rock-i">
+                        <span class="footer-brand-name"><span>Rock-i</span></span>
+                    </div>
+                    <p class="footer-desc" data-i18n="footer_desc">
+                        L'application officielle pour les trottinettes Rocki. 
+                        Conçue et développée par WeFixIT.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_product">Produit</h4>
+                    <ul>
+                        <li><a href="#features" data-i18n="nav_features">Fonctionnalités</a></li>
+                        <li><a href="#app-preview" data-i18n="nav_app">Application</a></li>
+                        <li><a href="#download" data-i18n="nav_download">Télécharger</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_support">Assistance</h4>
+                    <ul>
+                        <li><a href="#compatibility" data-i18n="compat_label">Compatibilité</a></li>
+                        <li><a href="mailto:support@wefixit.ma" data-i18n="footer_contact">Contactez-nous</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_legal">Mentions Légales</h4>
+                    <ul>
+                        <li><a href="../privacy-policy/" data-i18n="footer_privacy">Politique de Confidentialité</a></li>
+                        <li><a href="../account-deletion/" data-i18n="footer_deletion">Suppression de Compte</a></li>
+                        <li><a href="#" data-i18n="footer_terms">Conditions d'Utilisation</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 Rock-i <span data-i18n="footer_by">par</span> <a href="https://wefixit.ma" target="_blank" rel="noopener">WeFixIT</a>. <span data-i18n="footer_rights">Tous droits réservés.</span></span>
+                <span data-i18n="footer_made">Conçu avec précision au Maroc 🇲🇦</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
