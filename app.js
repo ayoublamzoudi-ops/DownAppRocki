@@ -372,11 +372,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // -------- Download Handler --------
-const APK_URL = 'https://github.com/ayoublamzoudi-ops/DownAppRocki/releases/latest/download/Rock-i.apk';
+const REPO_API_URL = 'https://api.github.com/repos/ayoublamzoudi-ops/DownAppRocki/releases';
+const FALLBACK_APK_URL = 'https://github.com/ayoublamzoudi-ops/DownAppRocki/releases/latest/download/Rock-i.apk';
 
-function handleDownload(e) {
+async function handleDownload(e) {
     e.preventDefault();
-    window.location.href = APK_URL;
+    try {
+        const res = await fetch(REPO_API_URL);
+        const releases = await res.json();
+        let apkUrl = FALLBACK_APK_URL;
+        
+        for (const release of releases) {
+            const asset = release.assets && release.assets.find(a => a.name === 'Rock-i.apk');
+            if (asset) {
+                apkUrl = asset.browser_download_url;
+                break;
+            }
+        }
+        
+        window.location.href = apkUrl;
+    } catch (err) {
+        console.error("Failed to fetch releases:", err);
+        window.location.href = FALLBACK_APK_URL;
+    }
 }
 
 function showToast(message) {
