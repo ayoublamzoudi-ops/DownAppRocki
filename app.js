@@ -372,13 +372,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // -------- Download Handler --------
+const APK_URL = 'https://github.com/ayoublamzoudi-ops/DownAppRocki/releases/latest/download/Rock-i.apk';
+
 function handleDownload(e) {
-    const apkUrl = '#';
-    if (apkUrl === '#') {
-        e.preventDefault();
-        const msg = translations[currentLang]?.toast_apk || translations.fr.toast_apk;
-        showToast(msg);
-    }
+    e.preventDefault();
+    window.location.href = APK_URL;
 }
 
 function showToast(message) {

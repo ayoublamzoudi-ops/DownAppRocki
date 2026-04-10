@@ -48,7 +48,7 @@
                         <span class="lang-code" id="langCode">FR</span>
                     </button>
                 </li>
-                <li><a href="#download" class="nav-cta"><img src="assets/images/download_icon.png" alt="" class="nav-cta-icon"><span data-i18n="nav_download">Télécharger</span></a></li>
+                <li><a href="#download" class="nav-cta" onclick="handleDownload(event)"><img src="assets/images/download_icon.png" alt="" class="nav-cta-icon"><span data-i18n="nav_download">Télécharger</span></a></li>
             </ul>
             <!-- Mobile lang switch (always visible) -->
             <button class="lang-switcher mobile-lang" id="langSwitcherMobile" aria-label="Changer de langue">
@@ -81,7 +81,7 @@
                     suivez chaque trajet et rejoignez une communauté grandissante de riders.
                 </p>
                 <div class="hero-actions">
-                    <a href="#download" class="btn-download" id="heroDownloadBtn">
+                    <a href="#download" class="btn-download" id="heroDownloadBtn" onclick="handleDownload(event)">
                         <img src="assets/images/android_icon.png" alt="" class="btn-icon">
                         <span data-i18n="btn_download_android">Télécharger pour Android</span>
                     </a>
