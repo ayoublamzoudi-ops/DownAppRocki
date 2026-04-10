@@ -75,7 +75,7 @@ const translations = {
         btn_download_apk: "Télécharger APK",
 
         // Footer
-        footer_desc: "L'application officielle pour les trottinettes Rocki. Conçue et développée par WeFixIT.",
+        footer_desc: "L'application officielle pour les trottinettes Rocki. Conçue et développée par DisRock.",
         footer_product: "Produit",
         footer_support: "Assistance",
         footer_legal: "Mentions Légales",
@@ -162,7 +162,7 @@ const translations = {
         btn_download_apk: "تحميل APK",
 
         // Footer
-        footer_desc: "التطبيق الرسمي لسكوترات Rocki الكهربائية. صمم وطوّر بواسطة WeFixIT.",
+        footer_desc: "التطبيق الرسمي لسكوترات Rocki الكهربائية. صمم وطوّر بواسطة DisRock.",
         footer_product: "المنتج",
         footer_support: "الدعم",
         footer_legal: "قانوني",
