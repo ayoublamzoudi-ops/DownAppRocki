@@ -88,6 +88,20 @@ const translations = {
         footer_rights: "Tous droits réservés.",
         footer_made: "Conçu avec précision au Maroc 🇲🇦",
 
+        // Changelog
+        changelog_label: "Journal des Mises à Jour",
+        changelog_title: "Historique des Versions",
+        changelog_subtitle: "Suivez l'évolution de Rock-i — chaque mise à jour apporte de nouvelles fonctionnalités, des améliorations de performance et des corrections.",
+        changelog_loading: "Chargement des versions...",
+        changelog_latest: "Dernière",
+        changelog_stable: "Stable",
+        changelog_pre: "Pré-version",
+        changelog_downloads: "téléchargements",
+        changelog_download_apk: "Télécharger APK",
+        changelog_empty: "Aucune version disponible pour le moment.",
+        changelog_error: "Impossible de charger l'historique des versions.",
+        changelog_no_notes: "Mise à jour et améliorations.",
+
         // Toast
         toast_apk: "Le lien de téléchargement APK sera configuré bientôt."
     },
@@ -175,6 +189,20 @@ const translations = {
         footer_rights: "جميع الحقوق محفوظة.",
         footer_made: "صُنع بدقة في المغرب 🇲🇦",
 
+        // Changelog
+        changelog_label: "سجل التحديثات",
+        changelog_title: "سجل الإصدارات",
+        changelog_subtitle: "تابع تطور Rock-i — كل تحديث يجلب ميزات جديدة وتحسينات في الأداء وإصلاحات.",
+        changelog_loading: "جاري تحميل الإصدارات...",
+        changelog_latest: "الأحدث",
+        changelog_stable: "مستقر",
+        changelog_pre: "نسخة أولية",
+        changelog_downloads: "تحميلات",
+        changelog_download_apk: "تحميل APK",
+        changelog_empty: "لا توجد إصدارات متاحة حالياً.",
+        changelog_error: "تعذر تحميل سجل الإصدارات.",
+        changelog_no_notes: "تحديثات وتحسينات.",
+
         // Toast
         toast_apk: "سيتم تكوين رابط تحميل APK قريباً."
     }
@@ -239,6 +267,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Apply stored language on load
     setLanguage(currentLang);
+
+    // Load changelog from GitHub releases
+    loadChangelog();
 
     // -------- Language Switcher Click --------
     ['langSwitcher', 'langSwitcherMobile'].forEach(id => {
@@ -395,6 +426,130 @@ async function handleDownload(e) {
         console.error("Failed to fetch releases:", err);
         window.location.href = FALLBACK_APK_URL;
     }
+}
+
+// -------- Changelog Loader --------
+async function loadChangelog() {
+    const container = document.getElementById('changelogContainer');
+    const loading = document.getElementById('changelogLoading');
+    const dict = translations[currentLang] || translations.fr;
+
+    try {
+        const res = await fetch(REPO_API_URL);
+        if (!res.ok) throw new Error('API request failed');
+        const releases = await res.json();
+
+        if (!releases || releases.length === 0) {
+            container.innerHTML = `<div class="changelog-empty">${dict.changelog_empty}</div>`;
+            return;
+        }
+
+        // Build timeline HTML
+        let html = '<div class="changelog-timeline">';
+
+        releases.forEach((release, index) => {
+            const isLatest = index === 0;
+            const isPrerelease = release.prerelease;
+            const tagName = release.tag_name || '';
+            const releaseName = release.name || tagName;
+            const body = release.body || dict.changelog_no_notes;
+            const publishedAt = release.published_at ? new Date(release.published_at) : null;
+
+            // Format date
+            let dateStr = '';
+            if (publishedAt) {
+                const day = publishedAt.getDate().toString().padStart(2, '0');
+                const month = publishedAt.toLocaleDateString(currentLang === 'ar' ? 'ar-MA' : 'fr-FR', { month: 'short' });
+                const year = publishedAt.getFullYear();
+                dateStr = `${day} ${month} ${year}`;
+            }
+
+            // Tag badge
+            let tagBadge = '';
+            if (isLatest) {
+                tagBadge = `<span class="changelog-tag latest">${dict.changelog_latest}</span>`;
+            } else if (isPrerelease) {
+                tagBadge = `<span class="changelog-tag pre">${dict.changelog_pre}</span>`;
+            } else {
+                tagBadge = `<span class="changelog-tag stable">${dict.changelog_stable}</span>`;
+            }
+
+            // Parse body into list items
+            const bodyHtml = formatReleaseBody(body, dict);
+
+            // APK asset info
+            const apkAsset = release.assets && release.assets.find(a => a.name && a.name.endsWith('.apk'));
+            let metaHtml = '';
+            if (apkAsset) {
+                const sizeMB = (apkAsset.size / (1024 * 1024)).toFixed(1);
+                const dlCount = apkAsset.download_count || 0;
+                metaHtml = `
+                    <div class="changelog-meta">
+                        <span class="changelog-downloads">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            ${dlCount} ${dict.changelog_downloads}
+                        </span>
+                        <span class="changelog-size">${sizeMB} MB</span>
+                        <a href="${escapeHtmlAttr(apkAsset.browser_download_url)}" class="changelog-apk-link">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            ${dict.changelog_download_apk}
+                        </a>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="changelog-entry">
+                    <div class="changelog-card">
+                        <div class="changelog-header">
+                            <span class="changelog-version">${escapeHtmlSafe(releaseName)}</span>
+                            ${tagBadge}
+                            <span class="changelog-date">${dateStr}</span>
+                        </div>
+                        <div class="changelog-body">${bodyHtml}</div>
+                        ${metaHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        html += '</div>';
+        container.innerHTML = html;
+
+    } catch (err) {
+        console.error('Changelog fetch error:', err);
+        container.innerHTML = `<div class="changelog-empty">${dict.changelog_error}</div>`;
+    }
+}
+
+function formatReleaseBody(body, dict) {
+    if (!body || body.trim() === '') return `<p>${dict.changelog_no_notes}</p>`;
+
+    // Split into lines
+    const lines = body.split('\n').map(l => l.trim()).filter(l => l);
+
+    // If it looks like a bullet list, format as <ul>
+    const bulletLines = lines.filter(l => /^[-*•]/.test(l) || /^\d+\./.test(l));
+    if (bulletLines.length > 0) {
+        const items = lines.map(line => {
+            const text = line.replace(/^[-*•]\s*/, '').replace(/^\d+\.\s*/, '');
+            return `<li>${escapeHtmlSafe(text)}</li>`;
+        }).join('');
+        return `<ul>${items}</ul>`;
+    }
+
+    // Otherwise, simple paragraph
+    return `<p>${escapeHtmlSafe(body)}</p>`;
+}
+
+function escapeHtmlSafe(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function escapeHtmlAttr(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 function showToast(message) {

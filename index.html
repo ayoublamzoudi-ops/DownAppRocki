@@ -41,6 +41,7 @@
                 <li><a href="#features" data-i18n="nav_features">Fonctionnalités</a></li>
                 <li><a href="#app-preview" data-i18n="nav_app">Application</a></li>
                 <li><a href="#compatibility" data-i18n="compat_label">Compatibilité</a></li>
+                <li><a href="#changelog" data-i18n="changelog_label">Journal des Mises à Jour</a></li>
                 <li>
                     <!-- Language Switcher -->
                     <button class="lang-switcher" id="langSwitcher" aria-label="Changer de langue" title="Changer de langue">
@@ -276,6 +277,29 @@
                         <div class="os-name">Bluetooth</div>
                         <div class="os-version" data-i18n="compat_ble">BLE 5.0 requis</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CHANGELOG ========== -->
+    <section class="section" id="changelog">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <span class="section-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+                    <span data-i18n="changelog_label">Journal des Mises à Jour</span>
+                </span>
+                <h2 class="section-title" data-i18n="changelog_title">Historique des Versions</h2>
+                <p class="section-subtitle" data-i18n="changelog_subtitle">
+                    Suivez l'évolution de Rock-i — chaque mise à jour apporte de nouvelles fonctionnalités, 
+                    des améliorations de performance et des corrections.
+                </p>
+            </div>
+            <div class="changelog-container reveal" id="changelogContainer">
+                <div class="changelog-loading" id="changelogLoading">
+                    <div class="changelog-spinner"></div>
+                    <span data-i18n="changelog_loading">Chargement des versions...</span>
                 </div>
             </div>
         </div>
