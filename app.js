@@ -477,25 +477,39 @@ async function loadChangelog() {
             // Parse body into list items
             const bodyHtml = formatReleaseBody(body, dict);
 
-            // APK asset info
+            // APK asset info — only show download button for latest release
             const apkAsset = release.assets && release.assets.find(a => a.name && a.name.endsWith('.apk'));
             let metaHtml = '';
             if (apkAsset) {
                 const sizeMB = (apkAsset.size / (1024 * 1024)).toFixed(1);
                 const dlCount = apkAsset.download_count || 0;
-                metaHtml = `
-                    <div class="changelog-meta">
-                        <span class="changelog-downloads">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            ${dlCount} ${dict.changelog_downloads}
-                        </span>
-                        <span class="changelog-size">${sizeMB} MB</span>
-                        <a href="${escapeHtmlAttr(apkAsset.browser_download_url)}" class="changelog-apk-link">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            ${dict.changelog_download_apk}
-                        </a>
-                    </div>
-                `;
+                if (isLatest) {
+                    // Latest release: show full download meta + button
+                    metaHtml = `
+                        <div class="changelog-meta">
+                            <span class="changelog-downloads">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                ${dlCount} ${dict.changelog_downloads}
+                            </span>
+                            <span class="changelog-size">${sizeMB} MB</span>
+                            <a href="${escapeHtmlAttr(apkAsset.browser_download_url)}" class="changelog-apk-link">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                ${dict.changelog_download_apk}
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    // Older releases: show stats only, no download link
+                    metaHtml = `
+                        <div class="changelog-meta">
+                            <span class="changelog-downloads">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                ${dlCount} ${dict.changelog_downloads}
+                            </span>
+                            <span class="changelog-size">${sizeMB} MB</span>
+                        </div>
+                    `;
+                }
             }
 
             html += `
