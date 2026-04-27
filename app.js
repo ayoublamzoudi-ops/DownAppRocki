@@ -445,10 +445,11 @@ async function loadChangelog() {
             return;
         }
 
-        // Build timeline HTML
+        // Build timeline HTML — show only the 3 most recent releases
+        const recentReleases = releases.slice(0, 3);
         let html = '<div class="changelog-timeline">';
 
-        releases.forEach((release, index) => {
+        recentReleases.forEach((release, index) => {
             const isLatest = index === 0;
             const isPrerelease = release.prerelease;
             const tagName = release.tag_name || '';
