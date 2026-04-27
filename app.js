@@ -404,26 +404,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // -------- Download Handler --------
 const REPO_API_URL = 'https://api.github.com/repos/ayoublamzoudi-ops/DownAppRocki/releases';
-const FALLBACK_APK_URL = 'https://github.com/ayoublamzoudi-ops/DownAppRocki/releases/latest/download/Rock-i.apk';
+const LATEST_API_URL = 'https://api.github.com/repos/ayoublamzoudi-ops/DownAppRocki/releases/latest';
+const FALLBACK_APK_URL = 'https://github.com/ayoublamzoudi-ops/DownAppRocki/releases/latest';
 
 async function handleDownload(e) {
     e.preventDefault();
     try {
-        const res = await fetch(REPO_API_URL);
-        const releases = await res.json();
-        let apkUrl = FALLBACK_APK_URL;
-        
-        for (const release of releases) {
-            const asset = release.assets && release.assets.find(a => a.name === 'Rock-i.apk');
-            if (asset) {
-                apkUrl = asset.browser_download_url;
-                break;
-            }
+        // Fetch only the latest release (single request, faster)
+        const res = await fetch(LATEST_API_URL);
+        if (!res.ok) throw new Error('API request failed');
+        const release = await res.json();
+
+        // Find any .apk asset (handles both "Rock-i.apk" and "app-release.apk")
+        const apkAsset = release.assets && release.assets.find(a => a.name && a.name.endsWith('.apk'));
+        if (apkAsset) {
+            window.location.href = apkAsset.browser_download_url;
+        } else {
+            // No APK attached to latest release — go to releases page
+            window.location.href = FALLBACK_APK_URL;
         }
-        
-        window.location.href = apkUrl;
     } catch (err) {
-        console.error("Failed to fetch releases:", err);
+        console.error("Failed to fetch latest release:", err);
         window.location.href = FALLBACK_APK_URL;
     }
 }
