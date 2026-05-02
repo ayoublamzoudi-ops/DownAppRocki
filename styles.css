@@ -755,6 +755,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   margin-inline-start: 6px;
 }
 
+/* "Beta" badge inside preview cards */
+.feature-beta-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 230, 118, 0.15);
+  color: var(--accent-green);
+  vertical-align: middle;
+  margin-inline-start: 6px;
+}
+
 .preview-card--soon {
   opacity: 0.55;
 }
